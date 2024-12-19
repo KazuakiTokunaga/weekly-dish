@@ -1,0 +1,64 @@
+[project]
+name = "my-recipe"
+version = "0.1.0"
+description = "Add your description here"
+authors = [
+    { name = "KazuakiTokunaga", email = "ktokunaga1993@gmail.com" }
+]
+dependencies = [
+    "numpy>=2.0.0",
+    "pandas>=2.2.2",
+    "google-api-core>=2.19.1",
+    "google-api-python-client>=2.136.0",
+    "google-auth>=2.31.0",
+    "google-cloud-bigquery>=3.25.0",
+    "google-cloud-storage>=2.17.0",
+    "google-cloud-secret-manager>=2.20.0",
+    "scikit-learn>=1.5.1",
+    "pathlib>=1.0.1",
+    "pydata-google-auth>=1.8.2",
+    "python-dotenv>=1.0.1",
+    "db-dtypes>=1.2.0",
+    "google-cloud>=0.34.0",
+    "streamlit>=1.36.0",
+    "matplotlib>=3.9.2",
+    "japanize-matplotlib>=1.1.3",
+    "fastapi>=0.115.6",
+    "uvicorn>=0.34.0",
+    "python-multipart>=0.0.19",
+    "requests>=2.32.3",
+]
+readme = "README.md"
+requires-python = "==3.10.12"
+
+[project.scripts]
+nb = "prj_scripts.scripts:launch_jupyterlab"
+test = "prj_scripts.scripts:run_pytest"
+lint = "prj_scripts.scripts:run_ruff"
+
+[tool.uv]
+dev-dependencies = [
+    "jupyter>=1.1.1",
+    "jupyterlab>=4.2.5",
+    "ipdb>=0.13.13",
+    "ruff>=0.6.8",
+    "mypy>=1.11.2",
+    "pytest>=8.3.3",
+]
+
+[tool.ruff]
+lint.select = [
+    "F", # Flake8
+    "B", # Black
+    "I", # isort
+    "E", # error
+    "W"  # warning
+]
+lint.ignore = []
+lint.fixable = ["ALL"]
+exclude = [
+    ".ruff_cache"
+]
+line-length = 180
+indent-width = 4
+target-version = "py310"
