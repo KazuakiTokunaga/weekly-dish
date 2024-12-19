@@ -5,7 +5,7 @@ import uvicorn
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Request
 
-from lib.recipe import get_weekly_dish
+from lib.recipe import get_todays_dish, get_weekly_dish
 
 app = FastAPI()
 
@@ -42,13 +42,12 @@ async def webhook(request: Request):
                 user_id = event["source"]["userId"]
                 user_message = event["message"]["text"]
 
-                if user_message == "1週間分の主菜":
+                if user_message == "1週間分の主菜リスト":
                     _, display_string = get_weekly_dish()
                     send_reply_message(event["replyToken"], display_string)
-                elif user_message == "今日の主菜":
-                    send_reply_message(event["replyToken"], "今日の主菜はカレーです。")
-                else:
-                    send_reply_message(event["replyToken"], "下部のボタンから選択してください。")
+                elif user_message == "今日の主菜候補3つ":
+                    _, display_string = get_todays_dish()
+                    send_reply_message(event["replyToken"], display_string)
 
                 # 再度ボタンを表示
                 send_persistent_menu(user_id)
@@ -67,22 +66,24 @@ def send_persistent_menu(user_id: str):
         "to": user_id,
         "messages": [
             {
+                "type": "text",
+                "text": "下部のボタンから選択してください",
                 "quickReply": {
                     "items": [
                         {
                             "type": "action",
                             "action": {
                                 "type": "message",
-                                "label": "1週間分の主菜",
-                                "text": "1週間分の主菜",
+                                "label": "1週間分の主菜リスト",
+                                "text": "1週間分の主菜リスト",
                             },
                         },
                         {
                             "type": "action",
                             "action": {
                                 "type": "message",
-                                "label": "今日の主菜",
-                                "text": "今日の主菜",
+                                "label": "今日の主菜候補3つ",
+                                "text": "今日の主菜候補3つ",
                             },
                         },
                     ]
