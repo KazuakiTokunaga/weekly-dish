@@ -1,38 +1,12 @@
-import base64
-import json
-import os
 import random
 from collections import defaultdict
-from dataclasses import dataclass
 from datetime import datetime, timedelta
 
-from dotenv import load_dotenv
-from google.cloud import bigquery
-from google.oauth2 import service_account
-
-
-@dataclass
-class Menu:
-    name: str
-    season: str
-    holiday_only: bool
-    not_storable: bool
-    interval: int
-    cooking_method: str
-    main_ingredient: str
-    category: str | None
+from lib.util import Menu, get_bigquery_client
 
 
 def get_menu_data() -> list[Menu]:
-    load_dotenv()
-    encoded_secrets = os.environ["GCP_SA_CREDENTIAL"]
-    decoded_secrets = base64.b64decode(encoded_secrets).decode("utf-8")
-    secrets = json.loads(decoded_secrets, strict=False)
-
-    scopes = ["https://www.googleapis.com/auth/bigquery", "https://www.googleapis.com/auth/drive"]
-    credentials = service_account.Credentials.from_service_account_info(secrets, scopes=scopes)
-    client = bigquery.Client(credentials=credentials, project=credentials.project_id)
-
+    client = get_bigquery_client()
     QUERY = "SELECT * FROM ktokunaga.my_recipe_app.main_dish"
     query_job = client.query(QUERY)
 
@@ -152,7 +126,7 @@ def get_todays_dish() -> tuple[list[Menu], str]:
         raise ValueError("条件に合うメニューが3つ未満です。")
 
     todays_dishes = random.sample(menu_list, 3)
-    display_string = "\n".join(menu.name for menu in todays_dishes)
+    display_string = "\n".join(f"{k+1}. {menu.name}" for k, menu in enumerate(todays_dishes))
 
     return todays_dishes, display_string
 
