@@ -11,6 +11,6 @@ WORKDIR /src
 RUN uv sync --frozen
 
 # run app
-WORKDIR /src/app
+WORKDIR /src
 EXPOSE 8080
-CMD uv run streamlit run app.py --server.port 8080 --server.address 0.0.0.0
+CMD uv run python main.py
