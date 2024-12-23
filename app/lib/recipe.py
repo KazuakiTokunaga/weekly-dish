@@ -8,6 +8,19 @@ from google.cloud import bigquery
 from lib.util import Menu, get_bigquery_client
 
 
+def get_recent_menu() -> list[str]:
+    client = get_bigquery_client()
+    QUERY = """
+        SELECT menu
+        FROM my_recipe_app.dish_history
+        WHERE date >= current_date('Asia/Tokyo') - 6
+    """
+    query_job = client.query(QUERY)
+
+    menu_list = [row["menu"] for row in query_job]
+    return menu_list
+
+
 def get_menu_data() -> list[Menu]:
     client = get_bigquery_client()
     QUERY = "SELECT * FROM my_recipe_app.main_dish"

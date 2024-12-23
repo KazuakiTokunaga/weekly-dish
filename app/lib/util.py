@@ -35,16 +35,3 @@ def get_bigquery_client() -> bigquery.Client:
     client = bigquery.Client(credentials=credentials, project=credentials.project_id)
 
     return client
-
-
-def get_recent_menu() -> list[str]:
-    client = get_bigquery_client()
-    QUERY = """
-        SELECT menu
-        FROM my_recipe_app.dish_history
-        WHERE date >= current_date('Asia/Tokyo') - 6
-    """
-    query_job = client.query(QUERY)
-
-    menu_list = [row["menu"] for row in query_job]
-    return menu_list

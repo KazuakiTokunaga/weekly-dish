@@ -3,8 +3,8 @@ from zoneinfo import ZoneInfo
 
 import pandas as pd
 import streamlit as st
-from lib.recipe import get_ingredients_data, get_menu_data, get_weekly_dish
-from lib.util import Menu, format_number, get_recent_menu
+from lib.recipe import get_ingredients_data, get_menu_data, get_recent_menu, get_weekly_dish
+from lib.util import Menu, format_number
 
 # Title and header
 st.title("今週の主菜")

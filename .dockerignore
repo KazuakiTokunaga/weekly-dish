@@ -1,6 +1,8 @@
 .venv/
 .vscode/
+.mypy_cache/
+.env
 .pytest_cache/
+.DS_Store
 __pycache__/
-_old_linebot/
 tests/
