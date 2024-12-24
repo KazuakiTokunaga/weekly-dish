@@ -24,7 +24,7 @@ jobs:
       # Dockerのビルドとプッシュ
       - name: Build and push Docker image
         env:
-          PROJECT_ID : ${{ secrets.PROJECT_ID }}
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
         run: |
           IMAGE="asia-northeast1-docker.pkg.dev/${{ PROJECT_ID }}/recipe/recipe-app:dev"
           docker build --no-cache=true --platform linux/x86_64 -f Dockerfile . -t "$IMAGE"
@@ -33,7 +33,7 @@ jobs:
       # Cloud Runにデプロイ
       - name: Deploy to Cloud Run
         env:
-          PROJECT_ID : ${{ secrets.PROJECT_ID }}
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
         run: |
           gcloud run deploy recipe-service-app \
             --project "${{ PROJECT_ID }}" \
