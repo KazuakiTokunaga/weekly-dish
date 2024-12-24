@@ -3,5 +3,6 @@
 .mypy_cache/
 .pytest_cache/
 .DS_Store
+.github/
 __pycache__/
 tests/
