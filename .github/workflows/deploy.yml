@@ -1,0 +1,39 @@
+name: Deploy to Google Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # コードをチェックアウト
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Google Cloud CLI のセットアップ
+      - name: Set up Google Cloud CLI
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          service_account_key: ${{ secrets.CD_GCP_SA_KEY }}
+          project_id: ${{ secrets.PROJECT_ID }} # プロジェクトIDをSecretsに登録
+
+      # Dockerのビルドとプッシュ
+      - name: Build and push Docker image
+        run: |
+          IMAGE="asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/recipe/recipe-app:dev"
+          docker build --no-cache=true --platform linux/x86_64 -f Dockerfile . -t "$IMAGE"
+          docker push "$IMAGE"
+
+      # Cloud Runにデプロイ
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy recipe-service-app \
+            --project "${{ secrets.GCP_PROJECT_ID }}" \
+            --image "asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/recipe/recipe-app:dev" \
+            --region asia-northeast1 \
+            --platform managed \
+            --allow-unauthenticated
