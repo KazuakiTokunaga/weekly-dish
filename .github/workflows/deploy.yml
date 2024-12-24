@@ -24,7 +24,7 @@ jobs:
       # Dockerのビルドとプッシュ
       - name: Build and push Docker image
         run: |
-          IMAGE="asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/recipe/recipe-app:dev"
+          IMAGE="asia-northeast1-docker.pkg.dev/${{ secrets.ROJECT_ID }}/recipe/recipe-app:dev"
           docker build --no-cache=true --platform linux/x86_64 -f Dockerfile . -t "$IMAGE"
           docker push "$IMAGE"
 
@@ -32,8 +32,8 @@ jobs:
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy recipe-service-app \
-            --project "${{ secrets.GCP_PROJECT_ID }}" \
-            --image "asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/recipe/recipe-app:dev" \
+            --project "${{ secrets.PROJECT_ID }}" \
+            --image "asia-northeast1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/recipe/recipe-app:dev" \
             --region asia-northeast1 \
             --platform managed \
             --allow-unauthenticated
