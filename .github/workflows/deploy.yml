@@ -26,7 +26,7 @@ jobs:
         env:
           PROJECT_ID: ${{ secrets.PROJECT_ID }}
         run: |
-          IMAGE="asia-northeast1-docker.pkg.dev/${{ PROJECT_ID }}/recipe/recipe-app:dev"
+          IMAGE="asia-northeast1-docker.pkg.dev/$PROJECT_ID/recipe/recipe-app:dev"
           docker build --no-cache=true --platform linux/x86_64 -f Dockerfile . -t "$IMAGE"
           docker push "$IMAGE"
 
@@ -36,8 +36,8 @@ jobs:
           PROJECT_ID: ${{ secrets.PROJECT_ID }}
         run: |
           gcloud run deploy recipe-service-app \
-            --project "${{ PROJECT_ID }}" \
-            --image "asia-northeast1-docker.pkg.dev/${{ PROJECT_ID }}/recipe/recipe-app:dev" \
+            --project $PROJECT_ID \
+            --image "asia-northeast1-docker.pkg.dev/$PROJECT_ID/recipe/recipe-app:dev" \
             --region asia-northeast1 \
             --platform managed \
             --allow-unauthenticated
