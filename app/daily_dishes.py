@@ -33,7 +33,7 @@ dishes: list[Menu] = fetch_menu_data()
 dish_list = [dish.name for dish in dishes]
 
 df_ingredients: pd.DataFrame = fetch_ingredients_data()
-recent_menu: list[str] = get_recent_menu_list()
+recent_menu: list[str] = get_recent_menu_list()[0][:7]
 
 # Get today's date in Japan time
 today = datetime.now(ZoneInfo("Asia/Tokyo")).strftime("%m/%d(%a)")
