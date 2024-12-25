@@ -3,32 +3,15 @@ from zoneinfo import ZoneInfo
 
 import pandas as pd
 import streamlit as st
-from lib.recipe import get_ingredients_data, get_menu_data, get_recent_menu, get_weekly_dish
+from lib.cache import fetch_ingredients_data, fetch_menu_data, fetch_recent_menu_list
+from lib.recipe import get_weekly_dish
 from lib.util import Menu, format_number
 
 # Title and header
 st.title("今週の主菜")
 
 
-@st.cache_data
-def fetch_menu_data():
-    """Fetch menu data once per session."""
-    return get_menu_data()
-
-
-@st.cache_data
-def fetch_ingredients_data():
-    """Fetch ingredients data once per session."""
-    return get_ingredients_data()
-
-
-@st.cache_data
-def get_recent_menu_list():
-    """Fetch recent menu data once per session."""
-    return get_recent_menu()
-
-
-def generate_week_dates():
+def generate_week_dates() -> list[str]:
     """Generate week dates once per session."""
     today = datetime.now(ZoneInfo("Asia/Tokyo"))
     return [(today + timedelta(days=i)).strftime("%m/%d(%a)") for i in range(7)]
@@ -39,7 +22,7 @@ dishes: list[Menu] = fetch_menu_data()
 dish_list = [dish.name for dish in dishes]
 
 df_ingredients: pd.DataFrame = fetch_ingredients_data()
-recent_menu: list[str] = get_recent_menu_list()[0][:7]
+recent_menu: list[str] = fetch_recent_menu_list()[0][:7]
 
 dates = generate_week_dates()
 

@@ -20,7 +20,7 @@ class Menu:
     category: str | None
 
 
-def format_number(num):
+def format_number(num: float) -> int | float:
     return int(num) if num.is_integer() else num
 
 

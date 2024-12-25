@@ -7,7 +7,6 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-
 weekly_dishes = st.Page("weekly_dishes.py", title="今週の主菜")
 daily_dishes = st.Page("daily_dishes.py", title="今日の主菜")
 register_dishes = st.Page("register_dishes.py", title="主菜を登録")
