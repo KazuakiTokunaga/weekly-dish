@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # コードをチェックアウト
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -26,7 +25,6 @@ jobs:
         run: |
           gcloud auth configure-docker asia-northeast1-docker.pkg.dev --quiet
 
-      # Dockerのビルドとプッシュ
       - name: Build and push Docker image
         env:
           PROJECT_ID: ${{ secrets.PROJECT_ID }}
@@ -35,7 +33,6 @@ jobs:
           docker build --no-cache=true --platform linux/x86_64 -f Dockerfile . -t "$IMAGE"
           docker push "$IMAGE"
 
-      # Cloud Runにデプロイ
       - name: Deploy to Cloud Run
         env:
           PROJECT_ID: ${{ secrets.PROJECT_ID }}

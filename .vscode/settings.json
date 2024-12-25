@@ -1,0 +1,22 @@
+{
+    "ruff.lint.args": [
+        "--config=pyproject.toml"
+    ],
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit",
+            "source.organizeImports": "never"
+        },
+    },
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./lib",
+        "-p",
+        "test_*.py"
+    ],
+    "python.testing.pytestEnabled": false,
+    "python.testing.unittestEnabled": true
+}
