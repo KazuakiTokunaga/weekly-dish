@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # コードをチェックアウト
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -25,11 +24,9 @@ jobs:
           pipx install uv
           uv sync
 
-      # 型チェック
       - name: Run mypy
         run: uv run mypy app/
 
-      # テストの実行
       - name: Run pytest
         env:
           GCP_SA_CREDENTIAL: ${{ secrets.GCP_SA_CREDENTIAL }}

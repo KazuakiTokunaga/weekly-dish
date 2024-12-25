@@ -1,5 +1,4 @@
 .venv/
-.vscode/
 .mypy_cache/
 .env
 .pytest_cache/
