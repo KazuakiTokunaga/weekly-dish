@@ -3,26 +3,15 @@ from zoneinfo import ZoneInfo
 
 import pandas as pd
 import streamlit as st
-from lib.recipe import get_menu_data, get_recent_menu, register_dish_history
+from lib.cache import fetch_menu_data, fetch_recent_menu_list
+from lib.recipe import register_dish_history
 from lib.util import Menu
 
 # Title and header
 st.title("食べた主菜を登録")
 
 
-@st.cache_data
-def fetch_menu_data():
-    """Fetch menu data once per session."""
-    return get_menu_data()
-
-
-@st.cache_data
-def get_recent_menu_list():
-    """Fetch recent menu data once per session."""
-    return get_recent_menu()
-
-
-def generate_recent_dates():
+def generate_recent_dates() -> list[datetime]:
     today = datetime.now(ZoneInfo("Asia/Tokyo"))
     return [today - timedelta(days=i) for i in range(3)]
 
@@ -30,7 +19,7 @@ def generate_recent_dates():
 # Load menu data
 dishes: list[Menu] = fetch_menu_data()
 dish_list = [dish.name for dish in dishes]
-recent_menu_list, date_list = get_recent_menu_list()
+recent_menu_list, date_list = fetch_recent_menu_list()
 
 # Generate recent dates
 dates = generate_recent_dates()
