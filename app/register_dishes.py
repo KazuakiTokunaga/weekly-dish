@@ -61,7 +61,7 @@ if register_dishes:
         register_dish_history(df)
 
         st.success("メニューが登録されました！")
-        fetch_recent_menu_list.clear()
+        fetch_recent_menu_list.clear()  # type: ignore
         recent_menu_list, date_list = fetch_recent_menu_list()
     else:
         st.warning("登録するメニューが選択されていません。")
