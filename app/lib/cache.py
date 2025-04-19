@@ -1,5 +1,5 @@
 import pandas as pd
-import streamlit as st
+import streamlit as st  # type: ignore
 
 from lib.recipe import get_ingredients_data, get_menu_data, get_recent_menu
 from lib.util import Menu

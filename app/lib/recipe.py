@@ -38,6 +38,7 @@ def get_menu_data() -> list[Menu]:
             cooking_method=row["utensil"],
             main_ingredient=row["main_ingredients"],
             category=row["category"],
+            image_filename=row["gcs_filename"],
         )
         for row in query_job
     ]

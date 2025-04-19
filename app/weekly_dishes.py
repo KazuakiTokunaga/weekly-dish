@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 import pandas as pd
-import streamlit as st
+import streamlit as st  # type: ignore
 from lib.cache import fetch_ingredients_data, fetch_menu_data, fetch_recent_menu_list
 from lib.recipe import get_weekly_dish
 from lib.util import Menu, format_number

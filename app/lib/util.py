@@ -3,7 +3,7 @@ import json
 import os
 from dataclasses import dataclass
 
-from dotenv import load_dotenv
+from dotenv import load_dotenv  # type: ignore
 from google.cloud import bigquery
 from google.oauth2 import service_account
 
@@ -18,6 +18,7 @@ class Menu:
     cooking_method: str
     main_ingredient: str
     category: str | None
+    image_filename: str | None
 
 
 def format_number(num: float) -> int | float:
